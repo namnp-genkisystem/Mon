@@ -8,6 +8,7 @@ import com.punam.mon.R
 import com.punam.mon.src.data.local_data.DataStoreDatabase
 import com.punam.mon.src.data.local_data.PreferencesKey
 import com.punam.mon.src.domain.model.response.LoginResponse
+import com.punam.mon.src.domain.use_case.user.UserUseCase
 import com.punam.mon.util.AppConstant
 import com.punam.mon.util.UiText
 import com.punam.mon.util.ViewState
@@ -23,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val storeDatabase: DataStoreDatabase,
-//    private val userUseCase: UserUseCase,
+    private val userUseCase: UserUseCase,
 ) : ViewModel() {
     private val _state = mutableStateOf(LoginState())
     val state: State<LoginState> = _state
@@ -95,12 +96,12 @@ class LoginViewModel @Inject constructor(
 
     private fun handleLogin() {
         viewModelScope.launch {
-//            _viewState.emit(ViewState.Loading)
-//            val result = userUseCase.userLogin(
-//                email = _state.value.emailInput,
-//                password = _state.value.passwordInput
-//            )
-//            _viewState.emit(result)
+            _viewState.emit(ViewState.Loading)
+            val result = userUseCase.userLogin(
+                email = _state.value.emailInput,
+                password = _state.value.passwordInput
+            )
+            _viewState.emit(result)
         }
     }
 
